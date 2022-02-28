@@ -25,8 +25,8 @@ end)
 ]]
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Garages) do
-        print("[Info/Load] " .. Lang:t("logging.creating_blips"))
-        QBCore.Functions.CreateBlip(v.position, 50, 4, 0.8, 0, true, Lang:t("general.blip"))
+        print("[Info/Load] Creating blips..")
+        QBCore.Functions.CreateBlip(v.position, 50, 4, 0.8, 0, true, "Job Garage")
     end
 end)
 
@@ -56,7 +56,7 @@ Citizen.CreateThread(function()
                                 headerDrawn = true
                                 exports["qb-menu"]:showHeader({
                                     {
-                                        header = Lang:t("menu.header"),
+                                        header = "Job Garage",
                                         params = {
                                             event = "job-garages:client:GarageMenu",
                                             args = {
@@ -85,18 +85,18 @@ end)
     Events
 ]]
 RegisterNetEvent("job-garages:client:GarageMenu", function(data)
-    print("[Info/GarageMenu] " .. Lang:t("logging.opening_menu"))
+    print("[Info/GarageMenu] Opening garage menu..")
     local garage = data.garage
     local menu = {
         {
-            header = Lang:t("menu.header"),
+            header = "Job Garage",
             isMenuHeader = true
         }
     }
 
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         menu[#menu + 1] = {
-            header = Lang:t("menu.return_vehicle"),
+            header = "Return Vehicle",
             txt = "",
             params = {
                 event = "job-garages:client:ReturnVehicle"
@@ -121,7 +121,7 @@ RegisterNetEvent("job-garages:client:GarageMenu", function(data)
             end
         else
             menu[#menu + 1] = {
-                header = Lang:t("menu.no_vehicles"),
+                header = "No vehicles",
                 txt = "",
                 isMenuHeader = true
             }
@@ -132,7 +132,7 @@ RegisterNetEvent("job-garages:client:GarageMenu", function(data)
 end)
 
 RegisterNetEvent("job-garages:client:SpawnVehicle", function(data)
-    print("[Info/SpawnVehicle] " .. Lang:t("logging.spawn_vehicle"))
+    print("[Info/SpawnVehicle] Spawning vehicle..")
     local vehicle = data.vehicle
     local position = data.position
 
@@ -144,14 +144,14 @@ RegisterNetEvent("job-garages:client:SpawnVehicle", function(data)
         TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
         TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
         SetVehicleEngineOn(veh, true, true)
-        QBCore.Functions.Notify(Lang:t("notifications.received_keys"))
+        QBCore.Functions.Notify("You have received the keys to the vehicle!")
     end, position, true)
 end)
 
 RegisterNetEvent("job-garages:client:ReturnVehicle", function()
-    print("[Info/ReturnVehicle] " .. Lang:t("logging.return_vehicle"))
+    print("[Info/ReturnVehicle] Returning vehicle..")
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         QBCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPedId(), false))
-        QBCore.Functions.Notify(Lang:t("notifications.returned_vehicle"))
+        QBCore.Functions.Notify("You have returned the vehicle!")
     end
 end)
