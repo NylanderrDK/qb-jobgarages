@@ -26,7 +26,15 @@ end)
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Garages) do
         print("[Info/Load] Creating blips..")
-        QBCore.Functions.CreateBlip(v.position, 50, 4, 0.8, 0, true, "Job Garage")
+        local blip = AddBlipForCoord(v.position)
+        SetBlipSprite(blip, 50)
+        SetBlipDisplay(blip, 4)
+        SetBlipScale(blip, 0.8)
+        SetBlipColour(blip, 0)
+        SetBlipAsShortRange(blip, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString("Job Garage")
+        EndTextCommandSetBlipName(blip)
     end
 end)
 
